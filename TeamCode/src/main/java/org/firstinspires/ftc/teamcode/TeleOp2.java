@@ -18,7 +18,7 @@ public class TeleOp2 extends LinearOpMode {
     private DcMotor leftDrive = null;
 
     private DcMotor rightDrive = null;
-
+    private DcMotor shooter;
 
 
     @Override
@@ -28,15 +28,15 @@ public class TeleOp2 extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
 
         telemetry.update();
-
-
+        shooter  = hardwareMap.get(DcMotor.class, "shooter");
+/*
         leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
 
         rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
 
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
 
-        rightDrive.setDirection(DcMotor.Direction.REVERSE);
+        rightDrive.setDirection(DcMotor.Direction.REVERSE);*/
 
         waitForStart();
 
@@ -45,7 +45,11 @@ public class TeleOp2 extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            double leftPower;
+            double shooterPower = .8;
+            shooter.setPower(shooterPower);
+
+
+            /*double leftPower;
 
             double rightPower;
 
@@ -70,7 +74,7 @@ public class TeleOp2 extends LinearOpMode {
 
             telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
 
-            telemetry.update();
+            telemetry.update(); */
 
         }
 

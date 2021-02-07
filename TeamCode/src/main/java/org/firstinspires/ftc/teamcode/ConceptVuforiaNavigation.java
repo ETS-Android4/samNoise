@@ -49,7 +49,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/*
  * This 2016-2017 OpMode illustrates the basics of using the Vuforia localizer to determine
  * positioning and orientation of robot on the FTC field.
  * The code is structured as a LinearOpMode
@@ -78,7 +78,7 @@ import java.util.List;
  *
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
- */
+
 
 @TeleOp(name="Concept: Vuforia Navigation", group ="Concept")
 //@Disabled
@@ -88,24 +88,21 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
 
     OpenGLMatrix lastLocation = null;
 
-    /**
+
      * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
      * localization engine.
-     */
-    VuforiaLocalizer vuforia;
 
-    @Override public void runOpMode() {
-        /*
+
          * To start up Vuforia, tell it the view that we wish to use for camera monitor (on the RC phone);
          * If no camera monitor is desired, use the parameterless constructor instead (commented out below).
-         */
+
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 
         // OR...  Do Not Activate the Camera Monitor View, to save power
         // VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
-        /*
+
          * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
          * 'parameters.vuforiaLicenseKey' is initialized is for illustration only, and will not function.
          * A Vuforia 'Development' license key, can be obtained free of charge from the Vuforia developer
@@ -116,29 +113,29 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
          *      ... yIgIzTqZ4mWjk9wd3cZO9T1axEqzuhxoGlfOOI2dRzKS4T0hQ8kT ...
          * Once you've obtained a license key, copy the string from the Vuforia web site
          * and paste it in to your code on the next line, between the double quotes.
-         */
+
         parameters.vuforiaLicenseKey = "AcYC6AH/////AAABmXCogx/uOEBBlp8PDkvHBr0DziDvQ/Mg5fU35QSxRsITTMw8TkwHevQ+GO2y1o+TU88K+nXwg8kr0x95HuasPwrKKh//mkzAdMiuG6IcCkOiamzyuA7lW6n4Sk8teot+chWz8+N05eHqh7sUzkxLTFxha35HUbAMjyx3kZ6leYBPzM1diBEawxTD9hvEIKQ7TC/bj/JrLe4g7QhRrBf5ihK83cghFo03S+kHZ53e/kJdJ5B8WACBF7904I/OpZF22mKDkdaWm24OzYDkIGCijxHlVOq+ErZqVRzkkfyIK7m6YJAIRzldkQeVCwrUYjuuhl3dOeifo6/0CX5yriRN3wmdp7sHzmAQ3Mj0kDrmM0Cm";
 
-        /*
+
          * We also indicate which camera on the RC that we wish to use.
          * Here we chose the back (HiRes) camera (for greater range), but
          * for a competition robot, the front camera might be more convenient.
-         */
+
         parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
 
-        /**
+
          * Instantiate the Vuforia engine
-         */
+
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
 
-        /**
+
          * Load the data sets that for the trackable objects we wish to track. These particular data
          * sets are stored in the 'assets' part of our application (you'll see them in the Android
          * Studio 'Project' view over there on the left of the screen). You can make your own datasets
          * with the Vuforia Target Manager: https://developer.vuforia.com/target-manager. PDFs for the
          * example "StonesAndChips", datasets can be found in in this project in the
          * documentation directory.
-         */
+
         VuforiaTrackables stonesAndChips = this.vuforia.loadTrackablesFromAsset("StonesAndChips");
         VuforiaTrackable redTarget = stonesAndChips.get(0);
         redTarget.setName("RedTarget");  // Stones
@@ -146,22 +143,22 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
         VuforiaTrackable blueTarget  = stonesAndChips.get(1);
         blueTarget.setName("BlueTarget");  // Chips
 
-        /** For convenience, gather together all the trackable objects in one easily-iterable collection */
+         For convenience, gather together all the trackable objects in one easily-iterable collection
         List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
         allTrackables.addAll(stonesAndChips);
 
-        /**
+
          * We use units of mm here because that's the recommended units of measurement for the
          * size values specified in the XML for the ImageTarget trackables in data sets. E.g.:
          *      <ImageTarget name="stones" size="247 173"/>
          * You don't *have to* use mm here, but the units here and the units used in the XML
          * target configuration files *must* correspond for the math to work out correctly.
-         */
+
         float mmPerInch        = 25.4f;
         float mmBotWidth       = 18 * mmPerInch;            // ... or whatever is right for your robot
         float mmFTCFieldWidth  = (12*12 - 2) * mmPerInch;   // the FTC field is ~11'10" center-to-center of the glass panels
 
-        /**
+
          * In order for localization to work, we need to tell the system where each target we
          * wish to use for navigation resides on the field, and we need to specify where on the robot
          * the phone resides. These specifications are in the form of <em>transformation matrices.</em>
@@ -216,35 +213,35 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
          * - First we rotate it 90 around the field's X axis to flip it upright
          * - Then we rotate it  90 around the field's Z access to face it away from the audience.
          * - Finally, we translate it back along the X axis towards the red audience wall.
-         */
+
         OpenGLMatrix redTargetLocationOnField = OpenGLMatrix
-                /* Then we translate the target off to the RED WALL. Our translation here
-                is a negative translation in X.*/
+                 Then we translate the target off to the RED WALL. Our translation here
+                is a negative translation in X.
                 .translation(-mmFTCFieldWidth/2, 0, 0)
                 .multiplied(Orientation.getRotationMatrix(
-                        /* First, in the fixed (field) coordinate system, we rotate 90deg in X, then 90 in Z */
+                         First, in the fixed (field) coordinate system, we rotate 90deg in X, then 90 in Z
                         AxesReference.EXTRINSIC, AxesOrder.XZX,
                         AngleUnit.DEGREES, 90, 90, 0));
         redTarget.setLocation(redTargetLocationOnField);
         RobotLog.ii(TAG, "Red Target=%s", format(redTargetLocationOnField));
 
-       /*
+
         * To place the Stones Target on the Blue Audience wall:
         * - First we rotate it 90 around the field's X axis to flip it upright
         * - Finally, we translate it along the Y axis towards the blue audience wall.
-        */
+
         OpenGLMatrix blueTargetLocationOnField = OpenGLMatrix
-                /* Then we translate the target off to the Blue Audience wall.
-                Our translation here is a positive translation in Y.*/
+                 Then we translate the target off to the Blue Audience wall.
+                Our translation here is a positive translation in Y.
                 .translation(0, mmFTCFieldWidth/2, 0)
                 .multiplied(Orientation.getRotationMatrix(
-                        /* First, in the fixed (field) coordinate system, we rotate 90deg in X */
+                         First, in the fixed (field) coordinate system, we rotate 90deg in X
                         AxesReference.EXTRINSIC, AxesOrder.XZX,
                         AngleUnit.DEGREES, 90, 0, 0));
         blueTarget.setLocation(blueTargetLocationOnField);
         RobotLog.ii(TAG, "Blue Target=%s", format(blueTargetLocationOnField));
 
-        /**
+
          * Create a transformation matrix describing where the phone is on the robot. Here, we
          * put the phone on the right hand side of the robot with the screen facing in (see our
          * choice of BACK camera above) and in landscape mode. Starting from alignment between the
@@ -255,7 +252,7 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
          * are then CCW, and negative rotations CW. An example: consider looking down the positive Z
          * axis towards the origin. A positive rotation about Z (ie: a rotation parallel to the the X-Y
          * plane) is then CCW, as one would normally expect from the usual classic 2D geometry.
-         */
+
         OpenGLMatrix phoneLocationOnRobot = OpenGLMatrix
                 .translation(mmBotWidth/2,0,0)
                 .multiplied(Orientation.getRotationMatrix(
@@ -263,15 +260,15 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
                         AngleUnit.DEGREES, -90, 0, 0));
         RobotLog.ii(TAG, "phone=%s", format(phoneLocationOnRobot));
 
-        /**
+
          * Let the trackable listeners we care about know where the phone is. We know that each
          * listener is a {@link VuforiaTrackableDefaultListener} and can so safely cast because
          * we have not ourselves installed a listener of a different type.
-         */
+
         ((VuforiaTrackableDefaultListener)redTarget.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
         ((VuforiaTrackableDefaultListener)blueTarget.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
 
-        /**
+
          * A brief tutorial: here's how all the math is going to work:
          *
          * C = phoneLocationOnRobot  maps   phone coords -> robot coords
@@ -288,24 +285,24 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
          * L x P.inverted() x C.inverted() maps robot coords to field coords.
          *
          * @see VuforiaTrackableDefaultListener#getRobotLocation()
-         */
 
-        /** Wait for the game to begin */
+
+         Wait for the game to begin
         telemetry.addData(">", "Press Play to start tracking");
         telemetry.update();
         waitForStart();
 
-        /** Start tracking the data sets we care about. */
+        Start tracking the data sets we care about.
         stonesAndChips.activate();
 
         while (opModeIsActive()) {
 
             for (VuforiaTrackable trackable : allTrackables) {
-                /**
+
                  * getUpdatedRobotLocation() will return null if no new information is available since
                  * the last time that call was made, or if the trackable is not currently visible.
                  * getRobotLocation() will return null if the trackable is not currently visible.
-                 */
+
                 telemetry.addData(trackable.getName(), ((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible() ? "Visible" : "Not Visible");    //
 
                 OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
@@ -313,9 +310,9 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
                     lastLocation = robotLocationTransform;
                 }
             }
-            /**
+
              * Provide feedback as to where the robot was last located (if we know).
-             */
+
             if (lastLocation != null) {
                 //  RobotLog.vv(TAG, "robot=%s", format(lastLocation));
                 telemetry.addData("Pos", format(lastLocation));
@@ -326,11 +323,12 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
         }
     }
 
-    /**
+
      * A simple utility that extracts positioning information from a transformation matrix
      * and formats it in a form palatable to a human being.
-     */
+
     String format(OpenGLMatrix transformationMatrix) {
         return transformationMatrix.formatAsTransform();
     }
 }
+*/
