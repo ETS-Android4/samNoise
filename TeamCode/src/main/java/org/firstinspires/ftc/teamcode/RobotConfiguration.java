@@ -24,12 +24,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 public class RobotConfiguration {
 
-    /* Public OpMode members. */
-    public DcMotor  leftFrontDrive   = null;
-    public DcMotor  rightFrontDrive  = null;
-    public DcMotor  leftBackDrive     = null;
-    public DcMotor  rightBackDrive = null;
-    public DcMotor  shooter = null;
+    /* Private OpMode members. */ //May make public later
+    private DcMotor  leftFrontDrive   = null;
+    private DcMotor  rightFrontDrive  = null;
+    private DcMotor  leftBackDrive     = null;
+    private DcMotor  rightBackDrive = null;
+    private DcMotor  shooter = null;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -62,10 +62,7 @@ public class RobotConfiguration {
         shooter.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Set all motors to zero power
-        leftFrontDrive.setPower(0);
-        leftBackDrive.setPower(0);
-        rightFrontDrive.setPower(0);
-        rightBackDrive.setPower(0);
+        stopDriveTrain();
         shooter.setPower(0);
 
 
@@ -127,6 +124,16 @@ public class RobotConfiguration {
         }else{
             shooter.setPower(0);
         }
+    }
+
+    /**
+     * Turn off all drive motors
+     */
+    public void stopDriveTrain(){
+        leftFrontDrive.setPower(0);
+        leftBackDrive.setPower(0);
+        rightFrontDrive.setPower(0);
+        rightBackDrive.setPower(0);
     }
 
 
