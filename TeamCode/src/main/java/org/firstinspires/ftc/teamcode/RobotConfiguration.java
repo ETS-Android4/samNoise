@@ -59,7 +59,7 @@ public class RobotConfiguration {
         rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
 
         //Temporary directions for shooter based on previous file testing
-        shooter.setDirection(DcMotorSimple.Direction.REVERSE);
+        shooter.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Set all motors to zero power
         leftFrontDrive.setPower(0);

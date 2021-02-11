@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-// Lets please change the name of this.
+// Lets please change the name of this, like what???? - Victoria
 
 @TeleOp
 
@@ -17,8 +17,8 @@ public class UGTeleOpAS extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     //private DcMotor leftDrive = null;
-
     //private DcMotor rightDrive = null;
+
     private DcMotor shooter;
 
 
@@ -30,7 +30,8 @@ public class UGTeleOpAS extends LinearOpMode {
 
         telemetry.update();
         shooter  = hardwareMap.get(DcMotor.class, "shooter");
-shooter.setDirection(DcMotor.Direction.REVERSE);
+        shooter.setDirection(DcMotor.Direction.REVERSE);
+
         /*leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
 
         rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
