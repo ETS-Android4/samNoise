@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -14,7 +13,7 @@ import com.qualcomm.robotcore.util.Range;
 
 public class UGTeleOpAS extends LinearOpMode {
 
-    private ElapsedTime runtime = new ElapsedTime();
+    private final ElapsedTime runtime = new ElapsedTime();
 
     //private DcMotor leftDrive = null;
     //private DcMotor rightDrive = null;
@@ -22,14 +21,14 @@ public class UGTeleOpAS extends LinearOpMode {
     private DcMotor shooter;
 
 
-   // @Override
+    // @Override
 
     public void runOpMode() {
 
         telemetry.addData("Status", "Initialized");
 
         telemetry.update();
-        shooter  = hardwareMap.get(DcMotor.class, "shooter");
+        shooter = hardwareMap.get(DcMotor.class, "shooter");
         shooter.setDirection(DcMotor.Direction.REVERSE);
 
         /*leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
@@ -47,7 +46,7 @@ public class UGTeleOpAS extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-           // double shooterPower = .8;
+            // double shooterPower = .8;
             shooter.setPower(-1.0);
 
 
