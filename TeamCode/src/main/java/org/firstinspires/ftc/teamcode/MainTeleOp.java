@@ -45,9 +45,12 @@ public class MainTeleOp extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            if(gamepad1.a) {
-                robot.shooter.setPower(1.0);
-            }
+
+            //Will run the shooter if the A button is Pressed
+            robot.setShooter(gamepad1.a);
+
+
+
 
             // Send telemetry message to signify robot running;
             telemetry.addData("Shooter Running",  "%.2f", gamepad1.a);

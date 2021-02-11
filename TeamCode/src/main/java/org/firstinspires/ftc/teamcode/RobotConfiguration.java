@@ -80,5 +80,56 @@ public class RobotConfiguration {
 
 
     }
+
+    /**
+     * Uses x and y vectors to determine and set the motor power.
+     *
+     * @param xVector The amount to move the robot left or right
+     * @param yVector The amount to move the robot forward or backward
+     * Precondition: Both the parameters must fall between -1.0 - 1.0
+     *
+     */
+    public void drive(float xVector, float yVector){
+
+    }
+
+    /**
+     * Uses left trigger to determine how much to rotate robot.
+     *
+     * @param leftTrigger Value of leftTrigger
+     * Precondition: The parameter must fall between 0 - 1.0
+     *
+     */
+    public void rotateCounterClockwise(float leftTrigger){
+
+    }
+
+    /**
+     * Uses right trigger to determine how much to rotate robot.
+     *
+     * @param rightTrigger Value of rightTrigger
+     * Precondition: The parameter must fall between 0 - 1.0
+     *
+     */
+    public void rotateClockwise(float rightTrigger){
+
+    }
+
+    /**
+     * Will run the shooter if true
+     *
+     * @param run Should the shooter run?
+     *
+     */
+    public void setShooter(boolean run){
+        if(run){
+            shooter.setPower(1.0);
+        }else{
+            shooter.setPower(0);
+        }
+    }
+
+
+
 }
 
