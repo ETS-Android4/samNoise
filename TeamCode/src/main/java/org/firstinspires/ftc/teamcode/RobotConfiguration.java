@@ -119,7 +119,7 @@ public class RobotConfiguration {
      * @param run Should the shooter run?
      *
      */
-    public void setShooter(boolean run){
+    public void runShooter(boolean run){
         if(run){
             shooter.setPower(1.0);
         }else{
@@ -137,6 +137,9 @@ public class RobotConfiguration {
         rightBackDrive.setPower(0);
     }
 
+    /**
+     * Returns the current voltage of the robot's main battery
+     */
     public double getBatteryPower(){
         return vs.getVoltage();
     }

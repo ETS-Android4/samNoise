@@ -11,7 +11,7 @@ public class RobotMath {
 
 
     /**
-     * Converts a distance in cenimeters to wheel degrees turned for our wheels.
+     * Converts a distance in centimeters to wheel degrees turned for our wheels.
      *
      * @param cm How much distance to travel
      *
@@ -26,7 +26,7 @@ public class RobotMath {
 
 
     /**
-     * Uses the main battery voltage and distance from the goal to figure out what
+     * Uses the main battery voltage, distance, and pitch from the goal to figure out what
      * power should be used for the shooter.
      *
      * @param batteryVoltage Current voltage of the main battery
@@ -34,11 +34,26 @@ public class RobotMath {
      *
      */
     public static double shootingPower(double batteryVoltage, double distance){
+
         double power;
 
-        power = 0; //Replace with equation. THis will be using physics calculations
+        power = 0; //Replace with equation. This will be using physics calculations
 
         return power;
+
+    }
+
+    /**
+     * Converts x and y distance into vector distance in centimeters
+     *
+     * @param x distance in the x dimension away from the target in inches
+     * @param y distance in the x dimension away from the target in inches
+     *
+     */
+
+    public static double distanceFromTarget(double x, double y){
+
+        return 0; //Return using pythagorean theorem
 
     }
 
