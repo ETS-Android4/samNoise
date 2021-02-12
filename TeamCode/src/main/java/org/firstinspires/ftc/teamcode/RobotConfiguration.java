@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -33,6 +34,7 @@ public class RobotConfiguration {
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
     private final ElapsedTime period  = new ElapsedTime();
+    VoltageSensor vs = hwMap.voltageSensor.get("name of usb motor controller"); //Change this
 
     /* Constructor */
     public RobotConfiguration(){
@@ -133,6 +135,10 @@ public class RobotConfiguration {
         leftBackDrive.setPower(0);
         rightFrontDrive.setPower(0);
         rightBackDrive.setPower(0);
+    }
+
+    public double getBatteryPower(){
+        return vs.getVoltage();
     }
 
 
