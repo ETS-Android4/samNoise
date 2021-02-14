@@ -40,11 +40,12 @@ public class MainTeleOp extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        // run until the end of the match (driver presses STOP)
+        // run until the end
+        // of the match (driver presses STOP)
         while (opModeIsActive()) {
 
             //Will run the shooter if the A button is Pressed
-            robot.setShooter(gamepad1.a);
+           // robot.setShooter(gamepad1.a);
 
 
 
