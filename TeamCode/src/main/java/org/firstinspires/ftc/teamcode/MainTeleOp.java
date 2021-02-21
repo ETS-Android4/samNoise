@@ -19,7 +19,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  */
 
 @TeleOp(name="Victoria's TeleOp", group="Mecanum")
-@Disabled
+
 public class MainTeleOp extends LinearOpMode {
 
     /* Declare OpMode members. */
