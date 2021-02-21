@@ -18,7 +18,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp //(name="Victoria's TeleOp", group="Mecanum")
+@TeleOp (name="Victoria's TeleOp", group="Mecanum")
 
 public class MainTeleOp extends LinearOpMode {
 
@@ -45,13 +45,17 @@ public class MainTeleOp extends LinearOpMode {
         while (opModeIsActive()) {
 
             //Will run the shooter if the A button is Pressed
-           // robot.setShooter(gamepad1.a);
+           //robot.runShooter(gamepad1.a);
 
+           robot.rotateCounterClockwise(gamepad1.left_trigger);
+           robot.rotateClockwise(gamepad1.right_trigger);
 
+           robot.driveTwo(gamepad1.left_stick_y);
+           //robot.getBatteryPower();
 
 
             // Send telemetry message to signify robot running;
-            telemetry.addData("Shooter Running",  "%.2f", gamepad1.a);
+            //telemetry.addData("Shooter Running",  "%.2f", gamepad1.a);
             telemetry.update();
 
             // Pace this loop so jaw action is reasonable speed.

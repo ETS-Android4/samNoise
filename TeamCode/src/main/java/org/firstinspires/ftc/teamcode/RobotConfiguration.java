@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.VoltageSensor;
+//import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -31,10 +31,13 @@ public class RobotConfiguration {
     private DcMotor  rightBackDrive = null;
     private DcMotor  shooter = null;
 
+    // Declare Contants  (not variable, can't change in program)
+    private final double THRESHOLD = 0.05;
+
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
     private final ElapsedTime period  = new ElapsedTime();
-    VoltageSensor vs = hwMap.voltageSensor.get("name of usb motor controller"); //Change this
+   // VoltageSensor vs = hwMap.voltageSensor.get("DQ16N6NX"); //Change this
 
     /* Constructor */
     public RobotConfiguration(){
@@ -87,10 +90,32 @@ public class RobotConfiguration {
      * Precondition: Both the parameters must fall between -1.0 - 1.0
      *
      */
-    public void drive(float xVector, float yVector){
+    public void drive(float xVector, float yVector) {
+       /* int forward = ;
+        int strafe = ;
+        if (Math.abs(xVector) > THRESHOLD && Math.abs(yVector) > THRESHOLD) {
+            leftFrontDrive.setPower(forward - strafe);
+        }
+        */
+        double y = yVector;
+        double x = xVector;
+
+        leftBackDrive.setPower(y + x);
+        leftFrontDrive.setPower(y + x);
+        rightBackDrive.setPower(y - x);
+        rightFrontDrive.setPower(y - x);
+
 
     }
 
+    public void driveTwo (double leftjoy) {
+        if (Math.abs(leftjoy) > THRESHOLD) {
+            leftBackDrive.setPower(leftjoy);
+            leftFrontDrive.setPower(leftjoy);
+            rightFrontDrive.setPower(leftjoy);
+            rightBackDrive.setPower(leftjoy);
+        }
+    }
     /**
      * Uses left trigger to determine how much to rotate robot.
      *
@@ -98,9 +123,15 @@ public class RobotConfiguration {
      * Precondition: The parameter must fall between 0 - 1.0
      *
      */
-    public void rotateCounterClockwise(float leftTrigger){
-
+    public void rotateCounterClockwise(float leftTrigger) {
+        if(leftTrigger > THRESHOLD){
+            leftBackDrive.setPower(-leftTrigger); //test polarity values
+            leftFrontDrive.setPower(-leftTrigger);
+            rightBackDrive.setPower(leftTrigger);
+            rightFrontDrive.setPower(leftTrigger);
+        }
     }
+
 
     /**
      * Uses right trigger to determine how much to rotate robot.
@@ -110,7 +141,12 @@ public class RobotConfiguration {
      *
      */
     public void rotateClockwise(float rightTrigger){
-
+        if(rightTrigger > THRESHOLD){
+            leftBackDrive.setPower(rightTrigger); //test polarity values
+            leftFrontDrive.setPower(rightTrigger);
+            rightBackDrive.setPower(rightTrigger);
+            rightFrontDrive.setPower(rightTrigger);
+        }
     }
 
     /**
@@ -119,17 +155,7 @@ public class RobotConfiguration {
      * @param run Should the shooter run?
      *
      */
-    public void runShooter(boolean run){
-        if(run){
-            shooter.setPower(1.0);
-        }else{
-            shooter.setPower(0);
-        }
-    }
-
-    /**
-     * Turn off all drive motors
-     */
+  /* */
     public void stopDriveTrain(){
         leftFrontDrive.setPower(0);
         leftBackDrive.setPower(0);
@@ -140,9 +166,9 @@ public class RobotConfiguration {
     /**
      * Returns the current voltage of the robot's main battery
      */
-    public double getBatteryPower(){
-        return vs.getVoltage();
-    }
+   // public double getBatteryPower(){
+      //  return vs.getVoltage();
+    //}
 
 
 
