@@ -18,7 +18,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Victoria's TeleOp", group="Mecanum")
+@TeleOp //(name="Victoria's TeleOp", group="Mecanum")
 
 public class MainTeleOp extends LinearOpMode {
 
