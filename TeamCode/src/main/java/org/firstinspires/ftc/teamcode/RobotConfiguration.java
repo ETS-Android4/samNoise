@@ -108,13 +108,20 @@ public class RobotConfiguration {
 
     }
 
-    public void driveTwo (double leftjoy) {
+    public void driveTwo (double leftjoy, double rightjoy) {
         if (Math.abs(leftjoy) > THRESHOLD) {
             leftBackDrive.setPower(leftjoy);
             leftFrontDrive.setPower(leftjoy);
             rightFrontDrive.setPower(leftjoy);
             rightBackDrive.setPower(leftjoy);
         }
+        if (Math.abs(rightjoy) > THRESHOLD) {
+            leftBackDrive.setPower(rightjoy);
+            leftFrontDrive.setPower(rightjoy);
+            rightFrontDrive.setPower(rightjoy);
+            rightBackDrive.setPower(rightjoy);
+        }
+
     }
     /**
      * Uses left trigger to determine how much to rotate robot.
@@ -130,6 +137,12 @@ public class RobotConfiguration {
             rightBackDrive.setPower(leftTrigger);
             rightFrontDrive.setPower(leftTrigger);
         }
+        if(leftTrigger < THRESHOLD){
+            leftFrontDrive.setPower(0);
+            leftBackDrive.setPower(0);
+            rightFrontDrive.setPower(0);
+            rightBackDrive.setPower(0);
+        }
     }
 
 
@@ -144,15 +157,30 @@ public class RobotConfiguration {
         if(rightTrigger > THRESHOLD){
             leftBackDrive.setPower(rightTrigger); //test polarity values
             leftFrontDrive.setPower(rightTrigger);
-            rightBackDrive.setPower(rightTrigger);
-            rightFrontDrive.setPower(rightTrigger);
+            rightBackDrive.setPower(-rightTrigger);
+            rightFrontDrive.setPower(-rightTrigger);
         }
+        if(rightTrigger < THRESHOLD){
+            leftFrontDrive.setPower(0);
+            leftBackDrive.setPower(0);
+            rightFrontDrive.setPower(0);
+            rightBackDrive.setPower(0);
+        }
+
     }
 
+    public void shooterBoi(boolean a){
+        if(a == true){
+          shooter.setPower(1.0);
+        }
+        if(a == false){
+            shooter.setPower(0);
+        }
+    }
     /**
      * Will run the shooter if true
      *
-     * @param run Should the shooter run?
+      @param
      *
      */
   /* */
