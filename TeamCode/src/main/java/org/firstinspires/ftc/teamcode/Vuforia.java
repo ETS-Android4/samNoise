@@ -26,77 +26,26 @@ import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.BACK;
 
 public class Vuforia {
-    // Constants
-    private static final int MAX_TARGETS = 4;
-    private static final double ON_AXIS = 10;      // Within 1.0 cm of target center-line
-    private static final double CLOSE_ENOUGH = 20;      // Within 2.0 cm of final target standoff
+
 
     // Select which camera you want use.  The FRONT camera is the one on the same side as the screen.  Alt. is BACK
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = VuforiaLocalizer.CameraDirection.FRONT;
 
 
     /* Private class members. */
-    private LinearOpMode myOpMode;       // Access to the OpMode object
+
     private RobotConfiguration myRobot;        // Access to the Robot hardware
-    private VuforiaTrackables targets;        // List of active targets
     private OpenGLMatrix lastLocation = null;
 
     VuforiaTrackable redTowerGoalTarget;
 
-    // Navigation data is only valid if targetFound == true;
-    private boolean targetFound;    // set to true if Vuforia is currently tracking a target
-    private String targetName;     // Name of the currently tracked target
-    private double robotX;         // X displacement from target center
-    private double robotY;         // Y displacement from target center
-    private double robotBearing;   // Robot's rotation around the Z axis (CCW is positive)
-    private double targetRange;    // Range from robot's center to target in mm
-    private double targetBearing;  // Heading of the target , relative to the robot's unrotated center
-    private double relativeBearing;// Heading to the target from the robot's current bearing.
-    //   eg: a Positive RelativeBearing means the robot must turn CCW to point at the target image.
 
     /* Constructor */
     public Vuforia() {
 
-        targetFound = false;
-        targetName = null;
-        targets = null;
 
-        robotX = 0;
-        robotY = 0;
-        targetRange = 0;
-        targetBearing = 0;
-        robotBearing = 0;
-        relativeBearing = 0;
     }
 
-    /***
-     * Send telemetry data to indicate navigation status
-     */
-    public void addNavTelemetry() {
-        if (targetFound) {
-            // Display the current visible target name, robot info, target info, and required robot action.
-            myOpMode.telemetry.addData("Visible", targetName);
-            myOpMode.telemetry.addData("Robot", "[X]:[Y] (B) [%5.0fmm]:[%5.0fmm] (%4.0f°)",
-                    robotX, robotY, robotBearing);
-            myOpMode.telemetry.addData("Target", "[R] (B):(RB) [%5.0fmm] (%4.0f°):(%4.0f°)",
-                    targetRange, targetBearing, relativeBearing);
-            myOpMode.telemetry.addData("- Turn    ", "%s %4.0f°", relativeBearing < 0 ? ">>> CW " : "<<< CCW", Math.abs(relativeBearing));
-            myOpMode.telemetry.addData("- Strafe  ", "%s %5.0fmm", robotY < 0 ? "LEFT" : "RIGHT", Math.abs(robotY));
-            myOpMode.telemetry.addData("- Distance", "%5.0fmm", Math.abs(robotX));
-        } else {
-            myOpMode.telemetry.addData("Visible", "- - - -");
-        }
-    }
-
-    /***
-     * Start tracking Vuforia images
-     */
-    public void activateTracking() {
-
-        // Start tracking any of the defined targets
-        if (targets != null)
-            targets.activate();
-    }
 
 
     /***
@@ -107,7 +56,7 @@ public class Vuforia {
     public void initVuforia(LinearOpMode opMode, RobotConfiguration robot) {
 
         // Save reference to OpMode and Hardware map
-        myOpMode = opMode;
+        //myOpMode = opMode;
         myRobot = robot;
 
         /**
@@ -192,12 +141,11 @@ public class Vuforia {
 
         double distance;
 
-
         // getUpdatedRobotLocation() will return null if no new information is available since
         // the last time that call was made, or if the trackable is not currently visible.
         OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener) redTowerGoalTarget.getListener()).getUpdatedRobotLocation();
         VectorF translation = lastLocation.getTranslation();
-        distance = translation.get(0);
+        distance = translation.get(0); //X position but if not this axis then try get(1) or get(2)
 
 
         return distance;

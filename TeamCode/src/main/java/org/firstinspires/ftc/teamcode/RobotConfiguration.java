@@ -160,6 +160,20 @@ public class RobotConfiguration {
     }
 
     /**
+     * Shoots for the high goal
+     *
+     *
+     */
+
+    public void shootHighGoal(){
+
+        double distance = vuforia.distanceFromTarget();
+        shooter.setPower(RobotMath.shootingPower(getBatteryPower(),distance));
+
+    }
+
+
+    /**
      * Will run the shooter if true
      *
      *
@@ -210,8 +224,8 @@ public class RobotConfiguration {
         return vs.getVoltage();
     }
 
-    public void setYaw(double yaw) {
-        driveYaw = Range.clip(yaw, -1, 1);
+    public double getDistance(){
+        return vuforia.distanceFromTarget();
     }
 
 
