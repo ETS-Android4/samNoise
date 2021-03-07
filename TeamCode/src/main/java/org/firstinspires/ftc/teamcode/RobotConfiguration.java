@@ -168,7 +168,8 @@ public class RobotConfiguration {
     public void shootHighGoal(){
 
         double distance = vuforia.distanceFromTarget();
-        shooter.setPower(RobotMath.shootingPower(getBatteryPower(),distance));
+        //Do have robot adjust psotition based on distance from target.
+        shooter.setPower(RobotMath.shootingPower(getBatteryPower(),distance)); //Should not take in distance
 
     }
 
