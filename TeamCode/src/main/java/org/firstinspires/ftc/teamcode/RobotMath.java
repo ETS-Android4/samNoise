@@ -37,6 +37,7 @@ public class RobotMath {
 
         double power;
 
+
         power = 0; //Replace with equation. This will be using physics calculations
 
         return power;

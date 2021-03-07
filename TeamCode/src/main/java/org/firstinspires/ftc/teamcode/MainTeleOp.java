@@ -48,9 +48,12 @@ public class MainTeleOp extends LinearOpMode {
 
             robot.setShooter(gamepad2.a);
 
-            robot.drive(gamepad1.left_stick_x, gamepad1.right_stick_y, gamepad1.left_trigger, gamepad1.right_trigger);
 
+            robot.drive(gamepad1.right_stick_x, gamepad1.right_stick_y, gamepad1.left_trigger, gamepad1.right_trigger);
 
+            robot.toggleIntakeFlip(gamepad2.b);
+
+            robot.intakeWheels(gamepad2.left_bumper, gamepad2.right_bumper);
 
 
 

@@ -1,10 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 //import com.qualcomm.robotcore.hardware.VoltageSensor;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import static org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot.MID_SERVO;
 
 /**
  * This is NOT an opmode.
@@ -30,14 +35,21 @@ public class RobotConfiguration {
     private DcMotor  leftBackDrive     = null;
     private DcMotor  rightBackDrive = null;
     private DcMotor  shooter = null;
+    private Servo intakeFlip = null;
+    private CRServo intakeWheels = null;
 
     // Declare Contants  (not variable, can't change in program)
     private final double THRESHOLD = 0.05;
+    private final double UPPOS = 0.5; //Maybe Should change to a zero position
+    private final double DOWNPOS = 0;
+    private final double STOPCRSERVO = 0.5;
+    private final double FORWARDCRSERVO = 1.0; //test direction
+    private final double REVERSECRSERVO = 0;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
     private final ElapsedTime period  = new ElapsedTime();
-   // VoltageSensor vs = hwMap.voltageSensor.get("DQ16N6NX"); //Change this
+    VoltageSensor vs = hwMap.voltageSensor.get("DQ16N6NX"); //Change this
 
     /* Constructor */
     public RobotConfiguration(){
@@ -56,18 +68,30 @@ public class RobotConfiguration {
         rightBackDrive = hwMap.get(DcMotor.class, "rightBackDrive");
         shooter   = hwMap.get(DcMotor.class, "shooter");
 
-        //Temporary directions for drive train, change after testing if needed.
-        leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
 
-       
+        //Temporary directions for drive train, change after testing if needed.
+        leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
+        leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
+        rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
+
+
+        //Intake Hardware
+        intakeFlip = hwMap.get(Servo.class, "intakeFlip");
+        intakeFlip.setPosition(UPPOS);
+        intakeWheels = hwMap.crservo.get("intakeWheels");
+        intakeWheels.resetDeviceConfigurationForOpMode();
+        intakeWheels.setPower(STOPCRSERVO);
+
+
+
+
         shooter.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // Set all motors to zero power
         stopDriveTrain();
         shooter.setPower(0);
+
 
 
 
@@ -95,9 +119,9 @@ public class RobotConfiguration {
         double strafe = xVector;
         double twist = -leftTrigger + rightTrigger;
 
-        double fl = forward + twist + strafe;
+        double fl = forward + twist - strafe;
         double fr = forward - twist - strafe;
-        double bl = forward + twist - strafe;
+        double bl = forward + twist + strafe;
         double br = forward - twist + strafe;
 
         double max = Math.max(Math.abs(fl), Math.max(Math.abs(bl), Math.max(Math.abs(br),Math.abs(fr))));
@@ -108,78 +132,32 @@ public class RobotConfiguration {
             bl /= max;
         }
 
-        leftFrontDrive.setPower(2 * -fl);
-        leftBackDrive.setPower(2 * -bl);
+        leftFrontDrive.setPower(2 * fl);
+        leftBackDrive.setPower(2 * bl);
         rightFrontDrive.setPower(2 * fr);
         rightBackDrive.setPower(2 * br);
     }
 
 
-    /**
-     * Uses left trigger to determine how much to rotate robot.
-     *
-     * @param leftTrigger Value of leftTrigger
-     * Precondition: The parameter must fall between 0 - 1.0
-     *
-     */
-    /*
-    public void rotateCounterClockwise(float leftTrigger) {
-        if(leftTrigger > THRESHOLD){
-            leftBackDrive.setPower(-leftTrigger); //test polarity values
-            leftFrontDrive.setPower(-leftTrigger);
-            rightBackDrive.setPower(leftTrigger);
-            rightFrontDrive.setPower(leftTrigger);
-        }
-        if(leftTrigger < THRESHOLD){
-            leftFrontDrive.setPower(0);
-            leftBackDrive.setPower(0);
-            rightFrontDrive.setPower(0);
-            rightBackDrive.setPower(0);
-        }
-    }
-*/
-
-    /**
-     * Uses right trigger to determine how much to rotate robot.
-     *
-     * @param rightTrigger Value of rightTrigger
-     * Precondition: The parameter must fall between 0 - 1.0
-     *
-     */
-    /*
-    public void rotateClockwise(float rightTrigger){
-        if(rightTrigger > THRESHOLD){
-            leftBackDrive.setPower(rightTrigger); //test polarity values
-            leftFrontDrive.setPower(rightTrigger);
-            rightBackDrive.setPower(-rightTrigger);
-            rightFrontDrive.setPower(-rightTrigger);
-        }
-        if(rightTrigger < THRESHOLD){
-            leftFrontDrive.setPower(0);
-            leftBackDrive.setPower(0);
-            rightFrontDrive.setPower(0);
-            rightBackDrive.setPower(0);
-        }
-
-    }
-
-    */
-
     public void setShooter(boolean a){
-        if(a == true){
+        if(a){
           shooter.setPower(1.0);
         }
-        if(a == false){
+        else{
             shooter.setPower(0);
         }
     }
+
+    public void shootingBasedOnDistance(double velocity){
+
+    }
+
     /**
      * Will run the shooter if true
      *
-      @param
      *
      */
-  /* */
+
     public void stopDriveTrain(){
         leftFrontDrive.setPower(0);
         leftBackDrive.setPower(0);
@@ -188,11 +166,44 @@ public class RobotConfiguration {
     }
 
     /**
+     * Will reverse position of the intake lever if __ button is pressed
+     *
+     * @param b gamepad1.__
+     */
+    public void toggleIntakeFlip(boolean b){
+        if(b && intakeFlip.getPosition() == DOWNPOS){
+            intakeFlip.setPosition(UPPOS);
+        }
+        else if(b && intakeFlip.getPosition() == UPPOS){
+            intakeFlip.setPosition(DOWNPOS);
+        }
+    }
+
+    /**
+     * TELL BUILDERS intakeWheels NEEDS TO BE A CONT ROTATION SERVO (SPEED ONE FOR IW AND TORQUE FOR IF)
+     *
+     * @param x
+     */
+    public void intakeWheels(boolean x, boolean y){
+        if(x){
+            intakeWheels.setPower(FORWARDCRSERVO);
+        }
+        else if(y){
+            intakeWheels.setPower(REVERSECRSERVO);
+        }
+        else{
+            intakeWheels.setPower(STOPCRSERVO);
+        }
+    }
+
+    /**
      * Returns the current voltage of the robot's main battery
      */
-   // public double getBatteryPower(){
-      //  return vs.getVoltage();
-    //}
+    public double getBatteryPower(){
+        return vs.getVoltage();
+    }
+
+
 
 
 
