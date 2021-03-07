@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 
+import static java.lang.Thread.sleep;
 import static org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot.MID_SERVO;
 
 /**
@@ -48,6 +49,7 @@ public class RobotConfiguration {
     private final double STOPCRSERVO = 0.5;
     private final double FORWARDCRSERVO = 1.0; //test direction
     private final double REVERSECRSERVO = 0;
+    private final double GOALDISTANCE = 1; //Change during testing also add a unit
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -168,8 +170,14 @@ public class RobotConfiguration {
     public void shootHighGoal(){
 
         double distance = vuforia.distanceFromTarget();
-        //Do have robot adjust psotition based on distance from target.
-        shooter.setPower(RobotMath.shootingPower(getBatteryPower(),distance)); //Should not take in distance
+        while (Math.abs(distance - GOALDISTANCE) > THRESHOLD ){
+            this.drive(0, (float)(distance-GOALDISTANCE),0,0);
+            distance = vuforia.distanceFromTarget();
+        }
+        this.stopDriveTrain();
+
+        shooter.setPower(RobotMath.shootingPower(getBatteryPower()));
+
 
     }
 

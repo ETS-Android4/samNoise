@@ -33,7 +33,7 @@ public class RobotMath {
      * @param distance The distance from the goal in cm
      *
      */
-    public static double shootingPower(double batteryVoltage, double distance){
+    public static double shootingPower(double batteryVoltage){
 
         double power;
 
