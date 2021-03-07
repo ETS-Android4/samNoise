@@ -13,10 +13,10 @@ public class RobotMath {
     /**
      * Converts a distance in centimeters to wheel degrees turned for our wheels.
      *
-     * @param cm How much distance to travel
+     * @param m How much distance to travel
      *
      */
-    public static int distanceToWheelDegrees(double cm){
+    public static int distanceToWheelDegrees(double m){
         int degrees;
 
         degrees = 0;  //Replace with equation
