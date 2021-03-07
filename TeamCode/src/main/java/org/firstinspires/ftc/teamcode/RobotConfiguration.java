@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+
 import static org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot.MID_SERVO;
 
 /**
@@ -51,8 +53,11 @@ public class RobotConfiguration {
     private final ElapsedTime period  = new ElapsedTime();
     VoltageSensor vs = hwMap.voltageSensor.get("DQ16N6NX"); //Change this
 
+    Vuforia vuforia;
+
     /* Constructor */
     public RobotConfiguration(){
+        vuforia = new Vuforia(this);
 
     }
 
