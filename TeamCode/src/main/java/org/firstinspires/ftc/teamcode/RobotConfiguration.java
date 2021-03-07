@@ -90,39 +90,31 @@ public class RobotConfiguration {
      * Precondition: Both the parameters must fall between -1.0 - 1.0
      *
      */
-    public void drive(float xVector, float yVector) {
-       /* int forward = ;
-        int strafe = ;
-        if (Math.abs(xVector) > THRESHOLD && Math.abs(yVector) > THRESHOLD) {
-            leftFrontDrive.setPower(forward - strafe);
+    public void drive(float xVector, float yVector, float leftTrigger, float rightTrigger) {
+        double forward = yVector;
+        double strafe = xVector;
+        double twist = -leftTrigger + rightTrigger;
+
+        double fl = forward + twist + strafe;
+        double fr = forward - twist - strafe;
+        double bl = forward + twist - strafe;
+        double br = forward - twist + strafe;
+
+        double max = Math.max(Math.abs(fl), Math.max(Math.abs(bl), Math.max(Math.abs(br),Math.abs(fr))));
+        if (max > 1){
+            fl /= max;
+            fr /= max;
+            br /= max;
+            bl /= max;
         }
-        */
-        double y = yVector;
-        double x = xVector;
 
-        leftBackDrive.setPower(y + x);
-        leftFrontDrive.setPower(y + x);
-        rightBackDrive.setPower(y - x);
-        rightFrontDrive.setPower(y - x);
-
-
+        leftFrontDrive.setPower(2 * -fl);
+        leftBackDrive.setPower(2 * -bl);
+        rightFrontDrive.setPower(2 * fr);
+        rightBackDrive.setPower(2 * br);
     }
 
-    public void driveTwo (double leftjoy, double rightjoy) {
-        if (Math.abs(leftjoy) > THRESHOLD) {
-            leftBackDrive.setPower(leftjoy);
-            leftFrontDrive.setPower(leftjoy);
-            rightFrontDrive.setPower(leftjoy);
-            rightBackDrive.setPower(leftjoy);
-        }
-        if (Math.abs(rightjoy) > THRESHOLD) {
-            leftBackDrive.setPower(rightjoy);
-            leftFrontDrive.setPower(rightjoy);
-            rightFrontDrive.setPower(rightjoy);
-            rightBackDrive.setPower(rightjoy);
-        }
 
-    }
     /**
      * Uses left trigger to determine how much to rotate robot.
      *
@@ -130,6 +122,7 @@ public class RobotConfiguration {
      * Precondition: The parameter must fall between 0 - 1.0
      *
      */
+    /*
     public void rotateCounterClockwise(float leftTrigger) {
         if(leftTrigger > THRESHOLD){
             leftBackDrive.setPower(-leftTrigger); //test polarity values
@@ -144,7 +137,7 @@ public class RobotConfiguration {
             rightBackDrive.setPower(0);
         }
     }
-
+*/
 
     /**
      * Uses right trigger to determine how much to rotate robot.
@@ -153,6 +146,7 @@ public class RobotConfiguration {
      * Precondition: The parameter must fall between 0 - 1.0
      *
      */
+    /*
     public void rotateClockwise(float rightTrigger){
         if(rightTrigger > THRESHOLD){
             leftBackDrive.setPower(rightTrigger); //test polarity values
@@ -168,6 +162,8 @@ public class RobotConfiguration {
         }
 
     }
+
+    */
 
     public void setShooter(boolean a){
         if(a == true){

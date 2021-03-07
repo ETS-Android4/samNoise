@@ -34,26 +34,10 @@ public class MainTeleOp extends LinearOpMode {
          * The init() method of the hardware class does all the work here
          */
        robot.init(hardwareMap);
-         //DcMotor leftFrontDrive;
-         //DcMotor  rightFrontDrive;
-         //  leftBackDrive;
-         //DcMotor  rightBackDrive;
-        /*DcMotor rightFrontDrive = hardwareMap.get(DcMotor.class, "rightFrontDrive");
-        DcMotor rightBackDrive = hardwareMap.get(DcMotor.class, "rightBackDrive");
-        DcMotor leftFrontDrive = hardwareMap.get(DcMotor.class, "leftFrontDrive");
-        DcMotor leftBackDrive = hardwareMap.get(DcMotor.class, "leftBackDrive");
-        DcMotor shooter = hardwareMap.get(DcMotor.class, "shooter");
 
-        leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
-        shooter.setDirection(DcMotorSimple.Direction.FORWARD);*/
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Get Ready", "To Party");    //
         telemetry.update();
-
-
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -62,31 +46,14 @@ public class MainTeleOp extends LinearOpMode {
         // of the match (driver presses STOP)
         while (opModeIsActive()) {
 
- /* double forward = -gamepad1.right_stick_y;
-            double sideways = gamepad1.right_stick_x;
-            double twist = gamepad1.left_stick_y;
-
-            double fl = forward + twist + sideways;
-            double fr = forward - twist - sideways;
-            double bl = forward + twist - sideways;
-            double br = forward - twist + sideways;
-
-            double max = Math.max(Math.abs(fl), Math.max(Math.abs(bl), Math.max(Math.abs(br),Math.abs(fr))));
-            if (max > 1){
-                fl /= max;
-                fr /= max;
-                br /= max;
-                bl /= max;
-            }
-
-            leftFrontDrive.setPower(2 * -fl);
-            leftBackDrive.setPower(2 * -bl);
-            rightFrontDrive.setPower(2 * fr);
-            rightBackDrive.setPower(2 * br);
-*/
             robot.setShooter(gamepad2.a);
-            // Send telemetry message to signify robot running;
-            //telemetry.addData("Shooter Running",  "%.2f", gamepad1.a);
+
+            robot.drive(gamepad1.left_stick_x, gamepad1.right_stick_y, gamepad1.left_trigger, gamepad1.right_trigger);
+
+
+
+
+
             telemetry.update();
 
             // Pace this loop so jaw action is reasonable speed.
