@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 
@@ -53,11 +54,12 @@ public class RobotConfiguration {
     private final ElapsedTime period  = new ElapsedTime();
     VoltageSensor vs = hwMap.voltageSensor.get("DQ16N6NX"); //Change this
 
+    private double  driveYaw        = 0 ;   // Positive is CW
+
     Vuforia vuforia;
 
     /* Constructor */
     public RobotConfiguration(){
-        vuforia = new Vuforia(this);
 
     }
 
@@ -158,6 +160,21 @@ public class RobotConfiguration {
     }
 
     /**
+     * Shoots for the high goal
+     *
+     *
+     */
+
+    public void shootHighGoal(){
+
+        double distance = vuforia.distanceFromTarget();
+        //Do have robot adjust psotition based on distance from target.
+        shooter.setPower(RobotMath.shootingPower(getBatteryPower(),distance)); //Should not take in distance
+
+    }
+
+
+    /**
      * Will run the shooter if true
      *
      *
@@ -208,6 +225,9 @@ public class RobotConfiguration {
         return vs.getVoltage();
     }
 
+    public double getDistance(){
+        return vuforia.distanceFromTarget();
+    }
 
 
 
