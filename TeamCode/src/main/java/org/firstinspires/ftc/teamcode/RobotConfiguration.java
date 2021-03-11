@@ -14,6 +14,7 @@ import org.firstinspires.ftc.robotcore.external.ClassFactory;
 
 import static java.lang.Thread.sleep;
 import static org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot.MID_SERVO;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 /**
  * This is NOT an opmode.
@@ -54,11 +55,10 @@ public class RobotConfiguration {
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
     private final ElapsedTime period  = new ElapsedTime();
-    VoltageSensor vs = hwMap.voltageSensor.get("DQ16N6NX"); //Change this
+    //VoltageSensor vs = hwMap.voltageSensor.get("DQ16N6NX"); //Change this
 
     private double  driveYaw        = 0 ;   // Positive is CW
 
-    Vuforia vuforia;
 
     /* Constructor */
     public RobotConfiguration(){
@@ -90,7 +90,7 @@ public class RobotConfiguration {
         intakeFlip.setPosition(UPPOS);
         intakeWheels = hwMap.crservo.get("intakeWheels");
         intakeWheels.resetDeviceConfigurationForOpMode();
-        intakeWheels.setPower(STOPCRSERVO);
+        //intakeWheels.setPower(STOPCRSERVO);
 
 
 
@@ -150,7 +150,7 @@ public class RobotConfiguration {
 
     public void setShooter(boolean a){
         if(a){
-          shooter.setPower(1.0);
+          shooter.setPower(-1.0);
         }
         else{
             shooter.setPower(0);
@@ -169,14 +169,14 @@ public class RobotConfiguration {
 
     public void shootHighGoal(){
 
-        double distance = vuforia.distanceFromTarget();
-        while (Math.abs(distance - GOALDISTANCE) > THRESHOLD ){
+        //double distance = vuforia.distanceFromTarget();
+       /* while (Math.abs(distance - GOALDISTANCE) > THRESHOLD ){
             this.drive(0, (float)(distance-GOALDISTANCE),0,0);
-            distance = vuforia.distanceFromTarget();
-        }
+            //distance = vuforia.distanceFromTarget();
+        }*/
         this.stopDriveTrain();
 
-        shooter.setPower(RobotMath.shootingPower(getBatteryPower()));
+        shooter.setPower(0.75);
 
 
     }
@@ -214,28 +214,30 @@ public class RobotConfiguration {
      *
      * @param x
      */
-    public void intakeWheels(boolean x, boolean y){
+    public String intakeWheels(boolean x){
         if(x){
-            intakeWheels.setPower(FORWARDCRSERVO);
+            intakeWheels.setPower(0.0);
+            return "run";
         }
-        else if(y){
-            intakeWheels.setPower(REVERSECRSERVO);
-        }
+//        else if(y){
+//            intakeWheels.setPower(-1);
+//        }
         else{
             intakeWheels.setPower(STOPCRSERVO);
+            return "nothing";
         }
     }
 
     /**
      * Returns the current voltage of the robot's main battery
      */
-    public double getBatteryPower(){
-        return vs.getVoltage();
-    }
+    //public double getBatteryPower(){
+        //return vs.getVoltage();
+    //}
 
-    public double getDistance(){
+    /*public double getDistance(){
         return vuforia.distanceFromTarget();
-    }
+    }*/
 
 
 

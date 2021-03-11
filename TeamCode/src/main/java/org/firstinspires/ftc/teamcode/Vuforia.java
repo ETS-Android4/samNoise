@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode;
+/*
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -24,15 +25,16 @@ import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.XYZ;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.YZX;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.EXTRINSIC;
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.BACK;
-
+*/
 public class Vuforia {
+/*
 
 
     // Select which camera you want use.  The FRONT camera is the one on the same side as the screen.  Alt. is BACK
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = VuforiaLocalizer.CameraDirection.FRONT;
 
 
-    /* Private class members. */
+    /* Private class members.
 
     private RobotConfiguration myRobot;        // Access to the Robot hardware
     private OpenGLMatrix lastLocation = null;
@@ -40,7 +42,7 @@ public class Vuforia {
     VuforiaTrackable redTowerGoalTarget;
 
 
-    /* Constructor */
+    /* Constructor
     public Vuforia() {
 
 
@@ -50,9 +52,9 @@ public class Vuforia {
 
     /***
      * Initialize the Target Tracking and navigation interface
-     * @param opMode    pointer to OpMode
-     * @param robot     pointer to Robot hardware class
-     */
+   //  * @param opMode    pointer to OpMode
+    // * @param robot     pointer to Robot hardware class
+
     public void initVuforia(LinearOpMode opMode, RobotConfiguration robot) {
 
         // Save reference to OpMode and Hardware map
@@ -63,7 +65,7 @@ public class Vuforia {
          * Start up Vuforia, telling it the id of the view that we wish to use as the parent for
          * the camera monitor.
          * We also indicate which camera on the RC that we wish to use.
-         */
+
 
         // VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(R.id.cameraMonitorViewId);  // Use this line to see camera display
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();                             // OR... Use this line to improve performance
@@ -113,7 +115,7 @@ public class Vuforia {
          *
          * Next, translate the camera lens to where it is on the robot.
          * In this example, it is centered (left to right), but 110 mm forward of the middle of the robot, and 200 mm above ground level.
-         */
+
 
         final int CAMERA_FORWARD_DISPLACEMENT = 110;   // Camera is 110 mm in front of robot center
         final int CAMERA_VERTICAL_DISPLACEMENT = 200;   // Camera is 200 mm above ground
@@ -136,7 +138,7 @@ public class Vuforia {
      * Return the distance in meters the robot is from the target
      *
      * @return distance in meters
-     */
+
     public double distanceFromTarget() {
 
         double distance;
@@ -144,12 +146,13 @@ public class Vuforia {
         // getUpdatedRobotLocation() will return null if no new information is available since
         // the last time that call was made, or if the trackable is not currently visible.
         OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener) redTowerGoalTarget.getListener()).getUpdatedRobotLocation();
-        VectorF translation = lastLocation.getTranslation();
-        distance = translation.get(0); //X position but if not this axis then try get(1) or get(2)
+        distance = robotLocationTransform.get(0,  0); //x position but if not this axis then try something
+
 
 
         return distance;
     }
 
 }
-
+*/
+}
