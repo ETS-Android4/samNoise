@@ -104,7 +104,7 @@ public class RobotConfiguration {
 
 
 
-        // Set all motors to run without encoders.
+        // Set all motors to run without encoders. To be removed later i am testing something
         // Change to RUN_USING_ENCODERS if encoders are installed.
         leftFrontDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftBackDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
