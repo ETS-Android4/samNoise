@@ -30,7 +30,6 @@ public class RobotMath {
      * power should be used for the shooter.
      *
      * @param batteryVoltage Current voltage of the main battery
-     * @param distance The distance from the goal in cm
      *
      */
     public static double shootingPower(double batteryVoltage){

@@ -53,14 +53,14 @@ public class MainTeleOp extends LinearOpMode {
 
             robot.toggleIntakeFlip(gamepad2.b);
 
-            robot.intakeWheels(gamepad2.left_bumper, gamepad2.right_bumper);
+           telemetry.addData(robot.intakeWheels(gamepad2.left_bumper), "hi");
+
+
 
             if(gamepad2.x) {
                 robot.shootHighGoal();
             }
 
-            telemetry.addData("Distance From Target", "= %.1f",
-                    robot.getDistance());
 
 
             telemetry.update();
