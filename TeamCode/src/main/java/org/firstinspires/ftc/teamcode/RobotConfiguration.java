@@ -40,7 +40,7 @@ public class RobotConfiguration {
     private DcMotor  leftBackDrive     = null;
     private DcMotor  rightBackDrive = null;
     private DcMotor  shooter = null;
-    private Servo intakeFlip = null;
+    private CRServo intakeTwo = null;
     private CRServo intakeWheels = null;
 
     // Declare Contants  (not variable, can't change in program)
@@ -86,8 +86,8 @@ public class RobotConfiguration {
 
 
         //Intake Hardware
-        intakeFlip = hwMap.get(Servo.class, "intakeFlip");
-        intakeFlip.setPosition(UPPOS);
+        intakeTwo = hwMap.crservo.get("intakeTwo");
+        intakeTwo.resetDeviceConfigurationForOpMode();
         intakeWheels = hwMap.crservo.get("intakeWheels");
         intakeWheels.resetDeviceConfigurationForOpMode();
         //intakeWheels.setPower(STOPCRSERVO);
@@ -99,7 +99,7 @@ public class RobotConfiguration {
 
         // Set all motors to zero power
         stopDriveTrain();
-        shooter.setPower(0);
+        stopServo();
 
 
 
@@ -150,7 +150,7 @@ public class RobotConfiguration {
 
     public void setShooter(boolean a){
         if(a){
-          shooter.setPower(-1.0);
+          shooter.setPower(.5);
         }
         else{
             shooter.setPower(0);
@@ -187,6 +187,10 @@ public class RobotConfiguration {
      *
      *
      */
+    public void stopServo(){
+        intakeWheels.setPower(0);
+        intakeTwo.setPower(0);
+    }
 
     public void stopDriveTrain(){
         leftFrontDrive.setPower(0);
@@ -199,15 +203,7 @@ public class RobotConfiguration {
      * Will reverse position of the intake lever if __ button is pressed
      *
      * @param b gamepad1.__
-     */
-    public void toggleIntakeFlip(boolean b){
-        if(b && intakeFlip.getPosition() == DOWNPOS){
-            intakeFlip.setPosition(UPPOS);
-        }
-        else if(b && intakeFlip.getPosition() == UPPOS){
-            intakeFlip.setPosition(DOWNPOS);
-        }
-    }
+  */
 
     /**
      * TELL BUILDERS intakeWheels NEEDS TO BE A CONT ROTATION SERVO (SPEED ONE FOR IW AND TORQUE FOR IF)
@@ -216,7 +212,7 @@ public class RobotConfiguration {
      */
     public String intakeWheels(boolean x){
         if(x){
-            intakeWheels.setPower(0.0);
+            intakeWheels.setPower(0);
             return "run";
         }
 //        else if(y){
@@ -224,6 +220,20 @@ public class RobotConfiguration {
 //        }
         else{
             intakeWheels.setPower(STOPCRSERVO);
+            return "nothing";
+        }
+    }
+
+    public String intakeTwo(boolean y){
+        if(y){
+            intakeTwo.setPower(0);
+            return "run";
+        }
+//        else if(y){
+//            intakeWheels.setPower(-1);
+//        }
+        else{
+            intakeTwo.setPower(STOPCRSERVO);
             return "nothing";
         }
     }

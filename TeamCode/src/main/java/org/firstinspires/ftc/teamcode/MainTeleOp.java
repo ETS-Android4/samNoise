@@ -39,6 +39,9 @@ public class MainTeleOp extends LinearOpMode {
         telemetry.addData("Get Ready", "To Party");    //
         telemetry.update();
 
+        robot.stopDriveTrain();
+        robot.stopServo();
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
@@ -46,14 +49,14 @@ public class MainTeleOp extends LinearOpMode {
         // of the match (driver presses STOP)
         while (opModeIsActive()) {
 
-            robot.setShooter(gamepad2.a);
+            robot.setShooter(gamepad2.y);
 
 
             robot.drive(gamepad1.right_stick_x, gamepad1.right_stick_y, gamepad1.left_trigger, gamepad1.right_trigger);
 
-            robot.toggleIntakeFlip(gamepad2.b);
-
-           telemetry.addData(robot.intakeWheels(gamepad2.left_bumper), "hi");
+            robot.intakeWheels(gamepad2.left_bumper);
+            robot.intakeTwo(gamepad2.right_bumper);
+           //telemetry.addData(robot.intakeWheels(gamepad2.left_bumper), "hi");
 
 
 
