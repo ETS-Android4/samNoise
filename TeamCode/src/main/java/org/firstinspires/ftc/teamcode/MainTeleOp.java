@@ -22,7 +22,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp (name="Victoria's TeleOp", group="Mecanum")
 
-public class MainTeleOp extends LinearOpMode {
+public class MainTeleOp  extends LinearOpMode {
 
     /* Declare OpMode members. */
     RobotConfiguration robot = new RobotConfiguration();   // Using preset robot configuration
@@ -40,7 +40,7 @@ public class MainTeleOp extends LinearOpMode {
         telemetry.update();
 
         robot.stopDriveTrain();
-        robot.stopServo();
+
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();

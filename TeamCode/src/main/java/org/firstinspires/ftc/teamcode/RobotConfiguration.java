@@ -212,7 +212,7 @@ public class RobotConfiguration {
      */
     public String intakeWheels(boolean x){
         if(x){
-            intakeWheels.setPower(0);
+            intakeWheels.setPower(-.5);
             return "run";
         }
 //        else if(y){
