@@ -42,6 +42,7 @@ public class RobotConfiguration {
     private DcMotor  shooter = null;
     private CRServo intakeTwo = null;
     private CRServo intakeWheels = null;
+    private Servo intakeThree = null;
 
     // Declare Contants  (not variable, can't change in program)
     private final double THRESHOLD = 0.05;
@@ -91,6 +92,7 @@ public class RobotConfiguration {
         intakeWheels = hwMap.crservo.get("intakeWheels");
         intakeWheels.resetDeviceConfigurationForOpMode();
         //intakeWheels.setPower(STOPCRSERVO);
+        intakeThree = hwMap.servo.get("intakeThree");
 
 
 
@@ -249,8 +251,13 @@ public class RobotConfiguration {
         return vuforia.distanceFromTarget();
     }*/
 
-
-
-
+    public void setIntakeThree(boolean b) {
+        if(b){
+            intakeThree.setPosition(0.5);
+        }
+        else{
+            intakeThree.setPosition(0);
+        }
+    }
 }
 
