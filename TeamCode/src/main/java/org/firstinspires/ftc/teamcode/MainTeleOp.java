@@ -58,6 +58,7 @@ public class MainTeleOp  extends LinearOpMode {
             robot.intakeTwo(gamepad2.right_bumper);
            //telemetry.addData(robot.intakeWheels(gamepad2.left_bumper), "hi");
 
+            robot.setIntakeThree(gamepad2.b);
 
 
             if(gamepad2.x) {

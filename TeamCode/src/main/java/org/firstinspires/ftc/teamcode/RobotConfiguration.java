@@ -152,7 +152,7 @@ public class RobotConfiguration {
 
     public void setShooter(boolean a){
         if(a){
-          shooter.setPower(.5);
+          shooter.setPower(-.5);
         }
         else{
             shooter.setPower(0);
@@ -253,7 +253,7 @@ public class RobotConfiguration {
 
     public void setIntakeThree(boolean b) {
         if(b){
-            intakeThree.setPosition(0.5);
+            intakeThree.setPosition(1);
         }
         else{
             intakeThree.setPosition(0);
