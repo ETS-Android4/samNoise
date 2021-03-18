@@ -6,20 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-/**
- * This OpMode uses RobotConfiguration.java file to define the devices on the robot.
- * All device access is managed through the RobotConfiguration class.
- * The code is structured as a LinearOpMode
- *
- * This particular OpMode executes a POV Game style Teleop for a PushBot
- * In this mode the left stick moves the robot FWD and back, the Right stick turns left and right.
- * It raises and lowers the claw using the Gamepad Y and A buttons respectively.
- * It also opens and closes the claws slowly using the left and right Bumper buttons.
- *
- * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
- */
-
 @TeleOp (name="Victoria's TeleOp", group="Mecanum")
 
 public class MainTeleOp  extends LinearOpMode {
@@ -40,7 +26,7 @@ public class MainTeleOp  extends LinearOpMode {
         telemetry.update();
 
         robot.stopDriveTrain();
-
+        robot.stopServo();
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();

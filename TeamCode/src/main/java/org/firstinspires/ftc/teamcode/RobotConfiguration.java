@@ -152,7 +152,7 @@ public class RobotConfiguration {
 
     public void setShooter(boolean a){
         if(a){
-          shooter.setPower(-.5);
+          shooter.setPower(-1);
         }
         else{
             shooter.setPower(0);
@@ -214,7 +214,7 @@ public class RobotConfiguration {
      */
     public String intakeWheels(boolean x){
         if(x){
-            intakeWheels.setPower(-.5);
+            intakeWheels.setPower(-1);
             return "run";
         }
 //        else if(y){
@@ -253,10 +253,10 @@ public class RobotConfiguration {
 
     public void setIntakeThree(boolean b) {
         if(b){
-            intakeThree.setPosition(1);
+            intakeThree.setPosition(0);
         }
         else{
-            intakeThree.setPosition(0);
+            intakeThree.setPosition(1);
         }
     }
 }
