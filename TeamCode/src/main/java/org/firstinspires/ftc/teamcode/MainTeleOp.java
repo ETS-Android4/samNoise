@@ -35,21 +35,19 @@ public class MainTeleOp  extends LinearOpMode {
         // of the match (driver presses STOP)
         while (opModeIsActive()) {
 
-            robot.setShooter(gamepad2.y);
+            robot.setShooter(gamepad2.left_stick_y);
 
 
             robot.drive(gamepad1.right_stick_x, gamepad1.right_stick_y, gamepad1.left_trigger, gamepad1.right_trigger);
 
-            robot.intakeWheels(gamepad2.left_bumper);
-            robot.intakeTwo(gamepad2.right_bumper);
+            robot.intakeWheels(gamepad2.left_bumper, gamepad2.right_bumper);
+          robot.intakeTwo(gamepad2.dpad_up, gamepad2.dpad_down);
            //telemetry.addData(robot.intakeWheels(gamepad2.left_bumper), "hi");
 
-            robot.setIntakeThree(gamepad2.b);
+           robot.intakeThree(gamepad2.x);
 
 
-            if(gamepad2.x) {
-                robot.shootHighGoal();
-            }
+
 
 
 

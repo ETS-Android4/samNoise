@@ -35,11 +35,11 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.tel
 public class RobotConfiguration {
 
     /* Private OpMode members. */ //May make public later
-    private DcMotor  leftFrontDrive   = null;
-    private DcMotor  rightFrontDrive  = null;
-    private DcMotor  leftBackDrive     = null;
-    private DcMotor  rightBackDrive = null;
-    private DcMotor  shooter = null;
+    private DcMotor leftFrontDrive = null;
+    private DcMotor rightFrontDrive = null;
+    private DcMotor leftBackDrive = null;
+    private DcMotor rightBackDrive = null;
+    private DcMotor shooter = null;
     private CRServo intakeTwo = null;
     private CRServo intakeWheels = null;
     private Servo intakeThree = null;
@@ -54,15 +54,15 @@ public class RobotConfiguration {
     private final double GOALDISTANCE = 1; //Change during testing also add a unit
 
     /* local OpMode members. */
-    HardwareMap hwMap           =  null;
-    private final ElapsedTime period  = new ElapsedTime();
+    HardwareMap hwMap = null;
+    private final ElapsedTime period = new ElapsedTime();
     //VoltageSensor vs = hwMap.voltageSensor.get("DQ16N6NX"); //Change this
 
-    private double  driveYaw        = 0 ;   // Positive is CW
+    private double driveYaw = 0;   // Positive is CW
 
 
     /* Constructor */
-    public RobotConfiguration(){
+    public RobotConfiguration() {
 
     }
 
@@ -72,11 +72,11 @@ public class RobotConfiguration {
         hwMap = ahwMap;
 
         // Define and Initialize Motors
-        leftFrontDrive  = hwMap.get(DcMotor.class, "leftFrontDrive");
+        leftFrontDrive = hwMap.get(DcMotor.class, "leftFrontDrive");
         rightFrontDrive = hwMap.get(DcMotor.class, "rightFrontDrive");
-        leftBackDrive   = hwMap.get(DcMotor.class, "leftBackDrive");
+        leftBackDrive = hwMap.get(DcMotor.class, "leftBackDrive");
         rightBackDrive = hwMap.get(DcMotor.class, "rightBackDrive");
-        shooter   = hwMap.get(DcMotor.class, "shooter");
+        shooter = hwMap.get(DcMotor.class, "shooter");
 
 
         //Temporary directions for drive train, change after testing if needed.
@@ -95,15 +95,11 @@ public class RobotConfiguration {
         intakeThree = hwMap.servo.get("intakeThree");
 
 
-
-
         shooter.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // Set all motors to zero power
         stopDriveTrain();
         stopServo();
-
-
 
 
         // Set all motors to run without encoders. To be removed later i am testing something
@@ -122,8 +118,7 @@ public class RobotConfiguration {
      *
      * @param xVector The amount to move the robot left or right
      * @param yVector The amount to move the robot forward or backward
-     * Precondition: Both the parameters must fall between -1.0 - 1.0
-     *
+     *                Precondition: Both the parameters must fall between -1.0 - 1.0
      */
     public void drive(float xVector, float yVector, float leftTrigger, float rightTrigger) {
         double forward = yVector;
@@ -135,8 +130,8 @@ public class RobotConfiguration {
         double bl = forward + twist + strafe;
         double br = forward - twist + strafe;
 
-        double max = Math.max(Math.abs(fl), Math.max(Math.abs(bl), Math.max(Math.abs(br),Math.abs(fr))));
-        if (max > 1){
+        double max = Math.max(Math.abs(fl), Math.max(Math.abs(bl), Math.max(Math.abs(br), Math.abs(fr))));
+        if (max > 1) {
             fl /= max;
             fr /= max;
             br /= max;
@@ -150,114 +145,89 @@ public class RobotConfiguration {
     }
 
 
-    public void setShooter(boolean a){
-        if(a){
-          shooter.setPower(-1);
+    public void setShooter(double a) {
+        if (a > Math.abs(.05)) {
+            shooter.setPower(-a);
         }
-        else{
+        else if (a < Math.abs(.05)){
             shooter.setPower(0);
         }
     }
 
-    public void shootingBasedOnDistance(double velocity){
+    public void shootingBasedOnDistance(double velocity) {
 
     }
 
     /**
      * Shoots for the high goal
-     *
-     *
      */
 
-    public void shootHighGoal(){
 
-        //double distance = vuforia.distanceFromTarget();
-       /* while (Math.abs(distance - GOALDISTANCE) > THRESHOLD ){
-            this.drive(0, (float)(distance-GOALDISTANCE),0,0);
-            //distance = vuforia.distanceFromTarget();
-        }*/
-        this.stopDriveTrain();
-
-        shooter.setPower(0.75);
-
-
-    }
 
 
     /**
      * Will run the shooter if true
-     *
-     *
      */
-    public void stopServo(){
+    public void stopServo() {
         intakeWheels.setPower(0);
         intakeTwo.setPower(0);
     }
 
-    public void stopDriveTrain(){
+    public void stopDriveTrain() {
         leftFrontDrive.setPower(0);
         leftBackDrive.setPower(0);
         rightFrontDrive.setPower(0);
         rightBackDrive.setPower(0);
     }
 
-    /**
-     * Will reverse position of the intake lever if __ button is pressed
-     *
-     * @param b gamepad1.__
-  */
-
-    /**
-     * TELL BUILDERS intakeWheels NEEDS TO BE A CONT ROTATION SERVO (SPEED ONE FOR IW AND TORQUE FOR IF)
-     *
-     * @param x
-     */
-    public String intakeWheels(boolean x){
-        if(x){
+    public void intakeWheels(boolean x, boolean z) {
+        if (x) {
             intakeWheels.setPower(-1);
-            return "run";
         }
-//        else if(y){
-//            intakeWheels.setPower(-1);
-//        }
-        else{
+        else if(z){
+          intakeWheels.setPower(1);
+      }
+        else {
             intakeWheels.setPower(STOPCRSERVO);
-            return "nothing";
+
         }
     }
 
-    public String intakeTwo(boolean y){
-        if(y){
+    public void intakeTwo(boolean j, boolean k) {
+        if (j) {
+            intakeTwo.setPower(-1);
+        }
+        else if(k){
+            intakeTwo.setPower(1);
+        }
+        else {
             intakeTwo.setPower(0);
-            return "run";
-        }
-//        else if(y){
-//            intakeWheels.setPower(-1);
-//        }
-        else{
-            intakeTwo.setPower(STOPCRSERVO);
-            return "nothing";
+
         }
     }
 
-    /**
-     * Returns the current voltage of the robot's main battery
-     */
-    //public double getBatteryPower(){
+    public void intakeThree(boolean i) {
+        if (i) {
+            intakeThree.setPosition(0);
+        }
+
+        else {
+            intakeThree.setPosition(1);
+
+        }
+    }
+        /**
+         * Returns the current voltage of the robot's main battery
+         */
+        //public double getBatteryPower(){
         //return vs.getVoltage();
-    //}
+        //}
 
     /*public double getDistance(){
         return vuforia.distanceFromTarget();
     }*/
 
-    public void setIntakeThree(boolean b) {
-        if(b){
-            intakeThree.setPosition(0);
-        }
-        else{
-            intakeThree.setPosition(1);
-        }
     }
-}
+
+
 
