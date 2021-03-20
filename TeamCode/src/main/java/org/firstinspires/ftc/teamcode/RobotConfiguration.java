@@ -120,7 +120,7 @@ public class RobotConfiguration {
      * @param yVector The amount to move the robot forward or backward
      *                Precondition: Both the parameters must fall between -1.0 - 1.0
      */
-    public void drive(float xVector, float yVector, float leftTrigger, float rightTrigger) {
+   public void drive(float xVector, float yVector, float leftTrigger, float rightTrigger) {
         double forward = yVector;
         double strafe = xVector;
         double twist = -leftTrigger + rightTrigger;
@@ -145,11 +145,11 @@ public class RobotConfiguration {
     }
 
 
-    public void setShooter(double a) {
-        if (a > Math.abs(.05)) {
-            shooter.setPower(-a);
+    public void setShooter(boolean a) {
+        if (a) {
+            shooter.setPower(-1);
         }
-        else if (a < Math.abs(.05)){
+        else{
             shooter.setPower(0);
         }
     }
@@ -161,10 +161,38 @@ public class RobotConfiguration {
     /**
      * Shoots for the high goal
      */
+/*
+    public void driveTwo(double m, double n, double o){
+        if (m > .05 && n > .05){
+            leftFrontDrive.setPower(m);
+            leftBackDrive.setPower(m);
+            rightFrontDrive.setPower(n);
+            rightBackDrive.setPower(n);
+        }
+        if (){
+            leftFrontDrive.setPower(-m);
+            leftBackDrive.setPower(-m);
+            rightFrontDrive.setPower(-n);
+            rightBackDrive.setPower(-n);
+        }
+        else if (o > .05){
+            leftFrontDrive.setPower(-o);
+            leftBackDrive.setPower(-o);
+            rightFrontDrive.setPower(o);
+            rightBackDrive.setPower(o);
+        }
+        else if (o < -.05){
+            leftFrontDrive.setPower(o);
+            leftBackDrive.setPower(o);
+            rightFrontDrive.setPower(-o);
+            rightBackDrive.setPower(-o);
+        }
+        else{
+            this.stopDriveTrain();
+        }
+    }
 
-
-
-
+/*
     /**
      * Will run the shooter if true
      */
@@ -188,7 +216,7 @@ public class RobotConfiguration {
           intakeWheels.setPower(1);
       }
         else {
-            intakeWheels.setPower(STOPCRSERVO);
+            intakeWheels.setPower(.5);
 
         }
     }
