@@ -35,14 +35,14 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.tel
 public class RobotConfiguration {
 
     /* Private OpMode members. */ //May make public later
-    private DcMotor leftFrontDrive = null;
-    private DcMotor rightFrontDrive = null;
-    private DcMotor leftBackDrive = null;
-    private DcMotor rightBackDrive = null;
-    private DcMotor shooter = null;
-    private CRServo intakeTwo = null;
-    private CRServo intakeWheels = null;
-    private Servo intakeThree = null;
+     DcMotor leftFrontDrive = null;
+     DcMotor rightFrontDrive = null;
+     DcMotor leftBackDrive = null;
+     DcMotor rightBackDrive = null;
+     DcMotor shooter = null;
+     CRServo intakeTwo = null;
+     CRServo intakeWheels = null;
+     Servo intakeThree = null;
 
     // Declare Contants  (not variable, can't change in program)
     private final double THRESHOLD = 0.05;
