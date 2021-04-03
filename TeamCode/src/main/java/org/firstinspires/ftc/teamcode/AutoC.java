@@ -28,7 +28,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.BACK;
 
 @Autonomous
-public class AutoB extends LinearOpMode {
+public class AutoC extends LinearOpMode {
 
 
 
@@ -53,12 +53,12 @@ public class AutoB extends LinearOpMode {
         robot.leftBackDrive.setPower(1);
         robot.rightBackDrive.setPower(1);
 
-        sleep(4000);
+        sleep(4800);
 
-        robot.leftFrontDrive.setPower(1);
-        robot.rightFrontDrive.setPower(-1);
-        robot.leftBackDrive.setPower(1);
-        robot.rightBackDrive.setPower(-1);
+        robot.leftFrontDrive.setPower(-1);
+        robot.rightFrontDrive.setPower(1);
+        robot.leftBackDrive.setPower(-1);
+        robot.rightBackDrive.setPower(1);
 
         sleep(1000);
 
@@ -66,12 +66,12 @@ public class AutoB extends LinearOpMode {
 
         sleep(100);
 
-        robot.leftFrontDrive.setPower(1);
-        robot.rightFrontDrive.setPower(1);
-        robot.leftBackDrive.setPower(1);
-        robot.rightBackDrive.setPower(1);
+        robot.leftFrontDrive.setPower(-1);
+        robot.rightFrontDrive.setPower(-1);
+        robot.leftBackDrive.setPower(-1);
+        robot.rightBackDrive.setPower(-1);
 
-        sleep(400);
+        sleep(200);
 
         robot.leftFrontDrive.setPower(-1);
         robot.rightFrontDrive.setPower(-1);
@@ -81,10 +81,10 @@ public class AutoB extends LinearOpMode {
         sleep(200);
 
 
-        robot.leftFrontDrive.setPower(-1);
-        robot.rightFrontDrive.setPower(1);
-        robot.leftBackDrive.setPower(-1);
-        robot.rightBackDrive.setPower(1);
+        robot.leftFrontDrive.setPower(1);
+        robot.rightFrontDrive.setPower(-1);
+        robot.leftBackDrive.setPower(1);
+        robot.rightBackDrive.setPower(-1);
 
         sleep(1000);
 
@@ -93,7 +93,8 @@ public class AutoB extends LinearOpMode {
         robot.leftBackDrive.setPower(-1);
         robot.rightBackDrive.setPower(-1);
 
-        sleep(500);
+        sleep(900);
+
+
     }
 }
-
