@@ -46,7 +46,7 @@ public class MainTeleOp  extends LinearOpMode {
 
            robot.intakeThree(gamepad2.x);
 
-
+            robot.drivetwo(gamepad1.left_stick_y);
 
 
 

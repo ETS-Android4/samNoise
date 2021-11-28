@@ -32,17 +32,17 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.tel
  * Servo channel:  Servo to open left claw:  "left_hand"
  * Servo channel:  Servo to open right claw: "right_hand"
  */
-public class RobotConfiguration {
+public class TankDrive {
 
     /* Private OpMode members. */ //May make public later
-     DcMotor leftFrontDrive = null;
-     DcMotor rightFrontDrive = null;
-     DcMotor leftBackDrive = null;
-     DcMotor rightBackDrive = null;
-     DcMotor shooter = null;
-     CRServo intakeTwo = null;
-     CRServo intakeWheels = null;
-     Servo intakeThree = null;
+    DcMotor leftFrontDrive = null;
+    DcMotor rightFrontDrive = null;
+    DcMotor leftBackDrive = null;
+    DcMotor rightBackDrive = null;
+    DcMotor shooter = null;
+    CRServo intakeTwo = null;
+    CRServo intakeWheels = null;
+    Servo intakeThree = null;
 
     // Declare Contants  (not variable, can't change in program)
     private final double THRESHOLD = 0.05;
@@ -62,9 +62,9 @@ public class RobotConfiguration {
 
 
     /* Constructor */
-    public RobotConfiguration() {
+    //public TankDrive() {
 
-    }
+    //}
 
     /* Initialize standard Hardware interfaces */
     public void init(HardwareMap ahwMap) {
@@ -120,7 +120,7 @@ public class RobotConfiguration {
      * @param yVector The amount to move the robot forward or backward
      *                Precondition: Both the parameters must fall between -1.0 - 1.0
      */
-   public void drive(float xVector, float yVector, float leftTrigger, float rightTrigger) {
+    public void drive(float xVector, float yVector, float leftTrigger, float rightTrigger) {
         double forward = yVector;
         double strafe = xVector;
         double twist = -leftTrigger + rightTrigger;
@@ -158,6 +158,26 @@ public class RobotConfiguration {
 
     }
 
+    public void drivetwo(double b){
+        if (b>0) {
+            leftFrontDrive.setPower(1);
+            leftBackDrive.setPower(1);
+            rightFrontDrive.setPower(1);
+            rightBackDrive.setPower(1);
+        }
+        if (b<0) {
+            leftFrontDrive.setPower(-1);
+            leftBackDrive.setPower(-1);
+            rightFrontDrive.setPower(-1);
+            rightBackDrive.setPower(-1);
+        }
+        else{
+            leftFrontDrive.setPower(0);
+            leftBackDrive.setPower(0);
+            rightFrontDrive.setPower(0);
+            rightBackDrive.setPower(0);
+        }
+    }
     /**
      * Shoots for the high goal
      */
@@ -200,26 +220,7 @@ public class RobotConfiguration {
         intakeWheels.setPower(0);
         intakeTwo.setPower(0);
     }
-    public void drivetwo(double b){
-        if (b>0) {
-            leftFrontDrive.setPower(1);
-            leftBackDrive.setPower(1);
-            rightFrontDrive.setPower(1);
-            rightBackDrive.setPower(1);
-        }
-        if (b<0) {
-            leftFrontDrive.setPower(-1);
-            leftBackDrive.setPower(-1);
-            rightFrontDrive.setPower(-1);
-            rightBackDrive.setPower(-1);
-        }
-        else{
-            leftFrontDrive.setPower(0);
-            leftBackDrive.setPower(0);
-            rightFrontDrive.setPower(0);
-            rightBackDrive.setPower(0);
-        }
-    }
+
     public void stopDriveTrain() {
         leftFrontDrive.setPower(0);
         leftBackDrive.setPower(0);
@@ -232,8 +233,8 @@ public class RobotConfiguration {
             intakeWheels.setPower(-1);
         }
         else if(z){
-          intakeWheels.setPower(1);
-      }
+            intakeWheels.setPower(1);
+        }
         else {
             intakeWheels.setPower(.5);
 
@@ -263,18 +264,18 @@ public class RobotConfiguration {
 
         }
     }
-        /**
-         * Returns the current voltage of the robot's main battery
-         */
-        //public double getBatteryPower(){
-        //return vs.getVoltage();
-        //}
+    /**
+     * Returns the current voltage of the robot's main battery
+     */
+    //public double getBatteryPower(){
+    //return vs.getVoltage();
+    //}
 
     /*public double getDistance(){
         return vuforia.distanceFromTarget();
     }*/
 
-    }
+}
 
 
 
