@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -32,248 +34,44 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.tel
  * Servo channel:  Servo to open left claw:  "left_hand"
  * Servo channel:  Servo to open right claw: "right_hand"
  */
-public class TankDrive {
+@TeleOp
 
-    /* Private OpMode members. */ //May make public later
-    DcMotor leftFrontDrive = null;
-    DcMotor rightFrontDrive = null;
-    DcMotor leftBackDrive = null;
-    DcMotor rightBackDrive = null;
-    DcMotor shooter = null;
-    CRServo intakeTwo = null;
-    CRServo intakeWheels = null;
-    Servo intakeThree = null;
+public class TankDrive extends LinearOpMode {
 
-    // Declare Contants  (not variable, can't change in program)
-    private final double THRESHOLD = 0.05;
-    private final double UPPOS = 0.5; //Maybe Should change to a zero position
-    private final double DOWNPOS = 0;
-    private final double STOPCRSERVO = 0.5;
-    private final double FORWARDCRSERVO = 1.0; //test direction
-    private final double REVERSECRSERVO = 0;
-    private final double GOALDISTANCE = 1; //Change during testing also add a unit
+    TDRobotConfig robot = new TDRobotConfig();
 
-    /* local OpMode members. */
-    HardwareMap hwMap = null;
-    private final ElapsedTime period = new ElapsedTime();
-    //VoltageSensor vs = hwMap.voltageSensor.get("DQ16N6NX"); //Change this
+    @Override
+    public void runOpMode() {
 
-    private double driveYaw = 0;   // Positive is CW
+        /* Initialize the hardware variables.
+         * The init() method of the hardware class does all the work here
+         */
+        robot.init(hardwareMap);
 
+        // Send telemetry message to signify robot waiting;
+        telemetry.addData("Get Ready", "To Party");    //
+        telemetry.update();
 
-    /* Constructor */
-    //public TankDrive() {
+        robot.stopDriveTrain();
 
-    //}
+        // Wait for the game to start (driver presses PLAY)
+        waitForStart();
 
-    /* Initialize standard Hardware interfaces */
-    public void init(HardwareMap ahwMap) {
-        // Save reference to Hardware map
-        hwMap = ahwMap;
+        // run until the end
+        // of the match (driver presses STOP)
+        while (opModeIsActive()) {
 
-        // Define and Initialize Motors
-        leftFrontDrive = hwMap.get(DcMotor.class, "leftFrontDrive");
-        rightFrontDrive = hwMap.get(DcMotor.class, "rightFrontDrive");
-        leftBackDrive = hwMap.get(DcMotor.class, "leftBackDrive");
-        rightBackDrive = hwMap.get(DcMotor.class, "rightBackDrive");
-        shooter = hwMap.get(DcMotor.class, "shooter");
+            robot.driveTrain(gamepad1.left_stick_y);
 
 
-        //Temporary directions for drive train, change after testing if needed.
-        leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
-        leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
+            telemetry.update();
 
-
-        //Intake Hardware
-        intakeTwo = hwMap.crservo.get("intakeTwo");
-        intakeTwo.resetDeviceConfigurationForOpMode();
-        intakeWheels = hwMap.crservo.get("intakeWheels");
-        intakeWheels.resetDeviceConfigurationForOpMode();
-        //intakeWheels.setPower(STOPCRSERVO);
-        intakeThree = hwMap.servo.get("intakeThree");
-
-
-        shooter.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        // Set all motors to zero power
-        stopDriveTrain();
-        stopServo();
-
-
-        // Set all motors to run without encoders. To be removed later i am testing something
-        // Change to RUN_USING_ENCODERS if encoders are installed.
-        leftFrontDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftBackDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightFrontDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightBackDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        shooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-
-    }
-
-    /**
-     * Uses x and y vectors to determine and set the motor power.
-     *
-     * @param xVector The amount to move the robot left or right
-     * @param yVector The amount to move the robot forward or backward
-     *                Precondition: Both the parameters must fall between -1.0 - 1.0
-     */
-    public void drive(float xVector, float yVector, float leftTrigger, float rightTrigger) {
-        double forward = yVector;
-        double strafe = xVector;
-        double twist = -leftTrigger + rightTrigger;
-
-        double fl = forward + twist - strafe;
-        double fr = forward - twist - strafe;
-        double bl = forward + twist + strafe;
-        double br = forward - twist + strafe;
-
-        double max = Math.max(Math.abs(fl), Math.max(Math.abs(bl), Math.max(Math.abs(br), Math.abs(fr))));
-        if (max > 1) {
-            fl /= max;
-            fr /= max;
-            br /= max;
-            bl /= max;
-        }
-
-        leftFrontDrive.setPower(2 * fl);
-        leftBackDrive.setPower(2 * bl);
-        rightFrontDrive.setPower(2 * fr);
-        rightBackDrive.setPower(2 * br);
-    }
-
-
-    public void setShooter(boolean a) {
-        if (a) {
-            shooter.setPower(-1);
-        }
-        else{
-            shooter.setPower(0);
+            // Pace this loop so jaw action is reasonable speed.
+            //sleep(50);
         }
     }
 
-    public void shootingBasedOnDistance(double velocity) {
 
-    }
-
-    public void drivetwo(double b){
-        if (b>0) {
-            leftFrontDrive.setPower(1);
-            leftBackDrive.setPower(1);
-            rightFrontDrive.setPower(1);
-            rightBackDrive.setPower(1);
-        }
-        if (b<0) {
-            leftFrontDrive.setPower(-1);
-            leftBackDrive.setPower(-1);
-            rightFrontDrive.setPower(-1);
-            rightBackDrive.setPower(-1);
-        }
-        else{
-            leftFrontDrive.setPower(0);
-            leftBackDrive.setPower(0);
-            rightFrontDrive.setPower(0);
-            rightBackDrive.setPower(0);
-        }
-    }
-    /**
-     * Shoots for the high goal
-     */
-/*
-    public void driveTwo(double m, double n, double o){
-        if (m > .05 && n > .05){
-            leftFrontDrive.setPower(m);
-            leftBackDrive.setPower(m);
-            rightFrontDrive.setPower(n);
-            rightBackDrive.setPower(n);
-        }
-        if (){
-            leftFrontDrive.setPower(-m);
-            leftBackDrive.setPower(-m);
-            rightFrontDrive.setPower(-n);
-            rightBackDrive.setPower(-n);
-        }
-        else if (o > .05){
-            leftFrontDrive.setPower(-o);
-            leftBackDrive.setPower(-o);
-            rightFrontDrive.setPower(o);
-            rightBackDrive.setPower(o);
-        }
-        else if (o < -.05){
-            leftFrontDrive.setPower(o);
-            leftBackDrive.setPower(o);
-            rightFrontDrive.setPower(-o);
-            rightBackDrive.setPower(-o);
-        }
-        else{
-            this.stopDriveTrain();
-        }
-    }
-
-/*
-    /**
-     * Will run the shooter if true
-     */
-    public void stopServo() {
-        intakeWheels.setPower(0);
-        intakeTwo.setPower(0);
-    }
-
-    public void stopDriveTrain() {
-        leftFrontDrive.setPower(0);
-        leftBackDrive.setPower(0);
-        rightFrontDrive.setPower(0);
-        rightBackDrive.setPower(0);
-    }
-
-    public void intakeWheels(boolean x, boolean z) {
-        if (x) {
-            intakeWheels.setPower(-1);
-        }
-        else if(z){
-            intakeWheels.setPower(1);
-        }
-        else {
-            intakeWheels.setPower(.5);
-
-        }
-    }
-
-    public void intakeTwo(boolean j, boolean k) {
-        if (j) {
-            intakeTwo.setPower(-1);
-        }
-        else if(k){
-            intakeTwo.setPower(1);
-        }
-        else {
-            intakeTwo.setPower(0);
-
-        }
-    }
-
-    public void intakeThree(boolean i) {
-        if (i) {
-            intakeThree.setPosition(0);
-        }
-
-        else {
-            intakeThree.setPosition(1);
-
-        }
-    }
-    /**
-     * Returns the current voltage of the robot's main battery
-     */
-    //public double getBatteryPower(){
-    //return vs.getVoltage();
-    //}
-
-    /*public double getDistance(){
-        return vuforia.distanceFromTarget();
-    }*/
 
 }
 
