@@ -63,7 +63,8 @@ public class TankDrive extends LinearOpMode {
         // of the match (driver presses STOP)
         while (opModeIsActive()) {
 
-            robot.driveTrain(gamepad1.right_stick_y,gamepad1.left_stick_y);
+            //robot.driveTrain1(gamepad1.right_stick_y,gamepad1.left_stick_y);
+            robot.tankDriveTrain(gamepad1.left_stick_y, gamepad1.right_stick_y);
             robot.runRam(gamepad2.left_bumper, gamepad2.right_bumper);
             robot.runArm(gamepad2.left_stick_y);
 

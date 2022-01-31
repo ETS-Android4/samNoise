@@ -66,34 +66,58 @@ public class TDRobotConfig {
 
     }
 
+    //GENERAL METHODS
+
     public void stopDriveTrain() {
         leftTread.setPower(0);
         rightTread.setPower(0);
     }
 
     public void stopCRServo() {
+
         ram.setPower(STOPCRSERVO);
     }
 
     public void stopArm(){
+
         arm.setPower(0);
     }
 
-    public void driveTrain(double a, double b) {
+    //TELE-OP METHODS
+
+    public void driveTrain1(double a, double b) {
         if (a > 0){
-            leftTread.setPower(-1);
-            rightTread.setPower(1);
-        }
-        if (a < 0){
             leftTread.setPower(1);
             rightTread.setPower(-1);
         }
-        if (b > 0) {
-            leftTread.setPower(1);
+        if (a < 0){
+            leftTread.setPower(-1);
             rightTread.setPower(1);
         }
-        if (b < 0) {
+        if (b > 0) {
             leftTread.setPower(-1);
+            rightTread.setPower(-1);
+        }
+        if (b < 0) {
+            leftTread.setPower(1);
+            rightTread.setPower(1);
+        } else {
+            leftTread.setPower(0);
+            rightTread.setPower(0);
+        }
+    }
+
+    public void tankDriveTrain(double e, double f){
+        if (e > 0){
+            leftTread.setPower(1);
+        }
+        if (e < 0){
+            leftTread.setPower(-1);
+        }
+        if (f > 0) {
+            rightTread.setPower(1);
+        }
+        if (f < 0) {
             rightTread.setPower(-1);
         } else {
             leftTread.setPower(0);
@@ -126,5 +150,28 @@ public class TDRobotConfig {
             }
         }
 
+        //AUTONOMOUS METHODS
 
+    public void autoUnitForward(int seconds) {
+        leftTread.setPower(1);
+        rightTread.setPower(1);
+    }
+
+    public void autoUnitReverse(int seconds) {
+        leftTread.setPower(-1);
+        rightTread.setPower(-1);
+
+    }
+
+    public void autoUnitClockwiseTurn(int seconds) {
+        leftTread.setPower(1);
+        rightTread.setPower(-1);
+
+    }
+
+    public void autoUnitCounterClockwiseTurn(int seconds) {
+        leftTread.setPower(-1);
+        rightTread.setPower(1);
+
+    }
 }
